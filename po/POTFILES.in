@@ -1,0 +1,7 @@
+src/actions.c
+src/devilspie.c
+src/e-sexp.c
+src/logical.c
+src/matchers.c
+src/parser.c
+src/xutils.c

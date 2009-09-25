@@ -1,0 +1,990 @@
+2009-02-13  Ross Burton  <ross@linux.intel.com>
+
+	* src/xutils.c:
+	When fetching properties as strings, handle single valued
+	cardinals too (thanks Keith Swett).
+
+2008-04-21  Ross Burton  <ross@burtonini.com>
+
+	* configure.ac:
+	Remove obsolete macros.
+
+2008-02-24  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add unfullscreen action, thanks Mathias Dahl.
+
+2007-11-24  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.22.
+
+2007-10-31  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Fix decorate/undecorate actions with OpenBox (thanks Rafał Mużyło)
+
+2007-10-08  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.1:
+	Fix typos spotted by Loïc Minier.
+
+2007-09-23  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.21.
+
+2007-09-23  Ross Burton  <ross@burtonini.com>
+
+	* src/sexp-test.c:
+	Add a loop variable to keep the quit action happy.
+
+2007-09-23  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Handle wnck_screen_get_active_workspace() failing by then trying
+	to get the 0th workspace.  Also clean up func_center a
+	little. (#343546).
+
+2007-07-04  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add change_workspace, to change the active workspace (#453464,
+	thanks Adam Więckowski).
+
+2007-06-22  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Refactor decorate and undecorate.
+
+2007-06-22  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.1:
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add "decorate" action, the opposite of "undecorate".
+
+	Thanks Galkin Vasily, #449634.
+
+2007-03-28  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.c:
+	Display the version in --help.
+
+2007-03-12  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Remove AM_MAINTAINER_MODE.
+
+2007-01-29  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.[ch]:
+	Make the GMainLoop publically available.
+	
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add a quit action, thanks Leon Zhang.
+
+2007-01-29  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.20.2.
+
+2007-01-29  Ross Burton  <ross@burtonini.com>
+
+	* src/matches.c:
+	Fix window_workspace (thanks Andrew Yates).
+
+2007-01-12  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.20.1.
+
+2007-01-12  Ross Burton  <ross@burtonini.com>
+
+	* src/parser.c:
+	Update to new API so Devil's Pie actually works (thanks Lars!)
+
+2007-01-12  Ross Burton  <ross@burtonini.com>
+
+	* src/sexp-test.c:
+	Update to new API so the checks pass.
+
+2007-01-12  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.20.
+
+2007-01-12  Ross Burton  <ross@burtonini.com>
+
+	* src/e-sexp.c:
+	* src/parser.[ch]:
+	* src/devilspie.c:
+	* README:
+	Handle multiple expressions in a single file! Yay! Patch from Lars
+	Damerow <lars@pixar.com>.
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.1:
+	Update man page (thanks David Decotigny).
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add spawn_sync and spawn_async (thanks David Decotigny).
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add println, str, hex actions, and expand print (thanks David
+	Decotigny).
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* src/matchers.[ch]:
+	* src/parser.c:
+	Add func_window_xid (thanks David Decotigny)
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* src/matchers.h:
+	Add missing func_window_workspace.
+
+2007-01-08  Ross Burton  <ross@burtonini.com>
+
+	* src/e-sexp.c:
+	Use gi18n.h (thanks David Decotigny)
+
+2006-12-01  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.19.
+
+2006-12-01  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Don't use wnck_window_set_geometry, that doesn't exist in GNOME
+	2.14 (#381233)
+
+2006-11-20  Ross Burton  <ross@burtonini.com>
+
+	* src/xutils.[ch]:
+	Add my_wnck_get_cardinal().
+
+	* src/matchers.[ch]:
+	* src/parser.c:
+	Add window_workspace matcher, which returns the workspace number
+	for the current window.
+
+	Thanks to Andrew Yates.
+
+2006-10-20  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.18.
+
+2006-10-20  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add set viewport action (thanks James Willcox).  Also remove the
+	my_wnck functions.
+
+	* src/xutils.[ch]:
+	Add my_wnck_get_cardinal_list() and my_wnck_get_viewport_start()
+	(thanks James).  Also add the my_wnck functions moved from
+	actions.c.
+
+2006-09-11  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add unmaximise action (thanks Alex Menk).
+
+2006-08-06  Ross Burton  <ross@burtonini.com>
+
+	* src/xutils.c:
+	Generalise my_wnck_get_string_property_latin1() to handle atoms,
+	and coerce them to strings as required.
+
+	* src/matchers.[ch]:
+	* src/parser.c:
+	Add window_property action to return the value of an arbitrary
+	property on the window.
+
+	Patch from Nigel Tao (#348378).
+
+2006-07-04  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.[ch]:
+	* src/parser.c:
+	Add sticky action (#345902, Steve Leung)
+
+2006-06-04  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Fix (geometry) to handle negative offsets (#330067, Vincent Ho and
+	Midred)
+
+2006-05-22  Ross Burton  <ross@burtonini.com>
+
+	* src/action.[ch]:
+	* src/parser.c:
+	Add unminimise action (thanks to Richard Neill)
+
+2006-04-18  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	* src/actions.h:
+	* src/parser.c:
+	Port the opacity action (thanks to Pavel Palat)
+
+2006-03-07  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.17.1.
+
+2006-03-07  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Depend on GLib 2.9.1 onwards for GSlice.
+
+2006-03-06  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.17.
+
+2006-03-06  Ross Burton  <ross@burtonini.com>
+
+	* src/e-sexp.h:
+	* src/e-sexp.c:
+	Port to use GSlice rather than GMemChunk.
+
+2005-11-02  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.16.
+
+2005-10-21  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Fix undecorate action (Mikachu).
+
+2005-10-20  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Handle OpenBox specially when undecorating.
+
+2005-10-20  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.15.
+
+2005-10-20  Ross Burton  <ross@burtonini.com>
+
+	* src/matchers.c:
+	Protect against returning NULL, return empty string instead.
+
+2005-10-19  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Wrap X calls when removing decorations with error pop/push.
+
+2005-10-19  Ross Burton  <ross@burtonini.com>
+
+	* src/e-sexp.c:
+	Fix segfault when disposing (Christian Krause).
+
+2005-10-18  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	* src/actions.h:
+	Add focus and center actions.
+
+	* src/matchers.c:
+	* src/matchers.h:
+	Add window class matcher.
+	
+	* src/parser.c:
+	Update for new actions and matcher (patch from Jonas J Linde).
+
+2005-10-17  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	* src/actions.h:
+	* src/parser.c:
+	Add Print action (Ryan Koppenhaver)
+
+2005-10-17  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	* src/actions.h:
+	* src/parser.c:
+	Add Close action (Ryan Koppenhaver)
+
+2005-10-17  Ross Burton  <ross@burtonini.com>
+
+	* src/sexp-test.c:
+	* tests/not-false.ds:
+	* tests/not-true.ds:
+	Fix the test suite (Ryan Koppenhaver)
+
+2005-10-17  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.14.
+
+2005-10-17  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Add geometry setting action, thanks to Guido Boehm.
+
+2005-10-16  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	Fix typo breaking the set wintype action, thanks to Stefan van der
+	Haven for spotting this.
+
+2005-10-14  Ross Burton  <ross@burtonini.com>
+
+	* README:
+	Fix typos noticed by Larry Virden.
+
+2005-10-07  Ross Burton  <ross@burtonini.com>
+
+	* src/actions.c:
+	When pinning windows call pin() instead of stick() (thanks to
+	Jean-Yves Lefort for noticing this bug).
+
+2005-09-28  Ross Burton  <ross@burtonini.com>
+
+	* src/parser.c:
+	* src/devilspie.c:
+	Append new expressions, not prepend.  This way there is some
+	pretence of user configuration overriding the system.
+
+2005-09-27  Ross Burton  <ross@burtonini.com>
+
+	* NEWS:
+	Version 0.13.
+
+2005-09-27  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.spec.in:
+	Update for 0.13, from Lars Damerow <lars@pixar.com>.
+
+2005-09-27  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* tests/Makefile.am:
+	* tests/*.ds:
+	Add test files.
+
+	* src/Makefile.am:
+	* src/sexp-test.c:
+	Add test framework.
+
+2005-09-27  Ross Burton  <ross@burtonini.com>
+
+	* src/parser.h:
+	* src/parser.c:
+	* src/devilspie.c:
+	Make load_configuration_file() return an ESExp, instead of adding
+	it to the list itself.
+	
+2005-09-27  Ross Burton  <ross@burtonini.com>
+
+	* */*:
+	Utter, complete, and total rewrite from scratch. XML is dead, long
+	live s-expressions with logical operations! This rewrite was
+	sponsored by Lars Damerow <lars@pixar.com>.
+
+2005-09-26  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	* src/devilspie.c:
+	Re-arrange defines, rename LOCALEDIR.
+
+2005-09-26  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.c:
+	Don't start if no configuration was loaded.
+
+2005-09-26  Ross Burton  <ross@burtonini.com>
+
+	* src/doc-generator.c:
+	Cast strings to xmlChar*.
+
+2005-09-24  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* src/config-parser.c:
+	* src/devilspie.c:
+	Use GOption rather than popt.
+
+2005-09-24  Ross Burton  <ross@burtonini.com>
+
+	* src/config-parser.c:
+	* src/config-parser.h:
+	* src/devilspie-action-debug.gob:
+	* src/devilspie-action-decorate.gob:
+	* src/devilspie-action-exec.gob:
+	* src/devilspie-action-hide.gob:
+	* src/devilspie-action-layer.gob:
+	* src/devilspie-action-opacity.gob:
+	* src/devilspie-action-resize.gob:
+	* src/devilspie-action-savegeometry.gob:
+	* src/devilspie-action-setgeometry.gob:
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-action-setworkspace.gob:
+	* src/devilspie-action-shade.gob:
+	* src/devilspie-matcher-windowname.gob:
+	* src/devilspie.c:
+	* src/devilspie.h:
+	* src/parser-test.c:
+	Remove devilspie.h.
+
+2005-09-24  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	* src/devilspie-action-debug.gob:
+	* src/devilspie-action-decorate.gob:
+	* src/devilspie-action-exec.gob:
+	* src/devilspie-action-hide.gob:
+	* src/devilspie-action-layer.gob:
+	* src/devilspie-action-opacity.gob:
+	* src/devilspie-action-resize.gob:
+	* src/devilspie-action-savegeometry.gob:
+	* src/devilspie-action-setgeometry.gob:
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-action-setworkspace.gob:
+	* src/devilspie-action-shade.gob:
+	* src/devilspie-action.gob:
+	* src/devilspie-matcher-always.gob:
+	* src/devilspie-matcher-windowname.gob:
+	* src/devilspie-matcher.gob:
+	* src/devilspie.c:
+	* src/devilspie.h:
+	* src/flurb.c:
+	* src/flurb.h:
+	* src/xutils.c:
+	* src/xutils.h:
+	Clean up includes, move the wnck define into Makefile.am, clean up
+	code slightly.
+
+2005-09-16  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.11.
+
+2005-09-16  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	* src/flurb.c:
+	* src/devilspie-action-shade.gob:
+	Add shading action.  I can't remember who this is by as I've lost
+	the original mail, but thank you!
+	
+2005-09-16  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-setwintype.gob:
+	Handle the value being NULL, which happens on construction.
+
+2005-07-27  Ross Burton  <ross@burtonini.com>
+
+	* autogen.sh:
+	* Makefile.am:
+	Use Automake 1.6 instead of the ancient 1.4.
+
+2005-06-12  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	Add xutils.[ch] to the sources for parser-test (Henrik Brix
+	Andersen).
+
+2005-06-08  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Check for xsltproc.
+
+2005-05-23  Ross Burton  <ross@burtonini.com>
+
+	* src/flurb.c:
+	Initialise the Exec action.
+
+2005-05-04  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.10.
+
+2005-05-04  Ross Burton  <ross@burtonini.com>
+
+	* src/doc-generator.c:
+	Add the GParam minimum and maximum values to the XML.
+
+	* docs2html.xsl:
+	Display the minimum and maximum values.
+
+2005-05-04  Ross Burton  <ross@burtonini.com>
+
+	* src/xutils.c:
+	* src/xutils.h:
+	Add copy-and-paste implementations of the private functions
+	_wnck_get_string_property_latin1() and _wnck_window_get_xscreen().
+	
+	* src/devilspie-action-debug.gob:
+	* src/devilspie-action-decorate.gob:
+	* src/devilspie-action-layer.gob:
+	* src/devilspie-matcher-windowname.gob:
+	Update to use above API calls.  Now works on GNOME 2.10! Many
+	thanks to Crispin Flowerday <gnome@flowerday.cx> for the patch.
+
+2005-05-02  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-opacity.gob:
+	Add minimum and maximum value hints, and fix formatiing.
+
+2005-04-29  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.9.
+
+2005-04-29  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Check for wnck >= 2.9.92, as they need timestamps.
+
+	* src/devilspie-action-resize.gob:
+	If wnck >= 2.9.92, pass a timestamp when minimising.
+
+2005-04-08  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	Add xutils.c to the doc-generator build.
+
+2005-03-08  Ross Burton  <ross@burtonini.com>
+
+	* src/xutils.[ch]:
+	Copy and paste some private functions from wnck.
+	
+	* src/devilspie-action-debug.gob:
+	* src/devilspie-action-decorate.gob:
+	* src/devilspie-action-layer.gob:
+	* src/devilspie-action-opacity.gob:
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-matcher-windowname.gob:
+	Port to use xutils.c.	
+	
+2005-03-08  Ross Burton  <ross@burtonini.com>
+
+	* src/config-parser.c:
+	Handle double property types.
+
+2005-02-03  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-decorate.gob:
+	* src/devilspie-action-exec.gob:
+	* src/devilspie-action-hide.gob:
+	* src/devilspie-action-layer.gob:
+	* src/devilspie-action-opacity.gob:
+	* src/devilspie-action-resize.gob:
+	* src/devilspie-action-setgeometry.gob:
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-action-setworkspace.gob:
+	* src/devilspie-matcher-windowname.gob:
+	Add CONSTRUCT flag to properties.  Thanks to Jean-Yves Lefort for
+	the patch.
+
+2005-01-23  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.8.
+
+2005-01-12  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-opacity.gob:
+	* src/flurb.c:
+	* src/Makefile.am:
+	Added action to set the opacity of a window. Thanks to Guido Boehm
+	<devilspie@lenix.de>.
+
+2004-11-24  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Look for popt
+	
+	* src/devilspie.c:
+	Use popt to parse arguments, and as a result allow multiple
+	configuration files to be loaded and make --apply-to-existing
+	work.
+
+	* src/config-parser.c:
+	Use g_warning()
+
+2004-11-14  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-matcher-windowname.gob:
+	Check for invalid regular expressions.
+
+2004-10-03  Ross Burton  <ross@burtonini.com>
+
+	* README:
+	Remove the action/matcher documentation.
+
+	* docs2html.xsl:
+	XSLT transformation from doc-generator XML to HTML.
+
+	* Makefile.am:
+	Build devilspie-reference.html
+
+	* src/doc-generator.c:
+	Put the type of the property in the XML.
+
+2004-10-03  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	Run parser-test as a proper test, and build parser-test only when
+	doing tests.
+	
+	* src/parser-test.c:
+	Load a hard-coded configuration file as Automake tests are flawed.
+
+2004-10-02  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	Remove unused GNOME library checks, and look for libxml.
+
+	* src/doc-generator.c:
+	* src/Makefile.am:
+	New program, generate documentation for the matchers and actions.
+
+2004-10-01  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-exec.gob:
+	* src/flurb.c:
+	* src/Makefile.am:
+	Add command execution action by John Russell.
+
+2004-10-01  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-resize.gob:
+	* README:
+	Add maximized_horizontally and maximized_vertically, patch from
+	John Russell.
+
+2004-09-20  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-resize.gob:
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-matcher-windowname.gob:
+	Various fixes for compile warnings.
+
+	* src/Makefile.am:
+	Add -Wall to CFLAGS.
+
+2004-09-14  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.7.
+
+2004-09-07  Ross Burton  <ross@burtonini.com>
+
+	* README:
+	* sample-config.xml:
+	* src/devilspie-action-decorate.gob:
+	Set the Motif decoration hint aswell as the OpenBox one.  Patch
+	from Vaclav Lorenc.
+
+2004-08-19  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-resize.gob:
+	Include config.h, fixing the resize action.
+
+	* src/devilspie.c:
+	Stop using g_list_first() for no good reason.
+
+	* configure.in:
+	* NEWS:
+	Version 0.6.
+
+2004-08-17  Ross Burton  <ross@burtonini.com>
+
+	* src/Makefile.am:
+	Fix a typo.
+	
+	* configure.in:
+	Version 0.5.1.
+
+2004-08-17  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.5.
+
+2004-08-16  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-setgeometry.gob:
+	* src/Makefile.am:
+	* src/flurb.c:
+	* README:
+	Action to set the geometry of a window. Thanks to Henrik Brix
+	Andersen <brix@gimp.org> for the patch.
+
+	* src/devilspie-action-debug.gob:
+	Print the geometry of the window (HBA).
+
+	* sample-config.xml:
+	Demonstrate the new action.
+	
+2004-06-13  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.4.1
+
+2004-06-11  Ross Burton  <ross@burtonini.com>
+
+	* Makefile.am:
+	Stop disting debian/.  I build the debs around here!
+
+2004-06-06  Ross Burton  <ross@burtonini.com>
+
+	* configure.in:
+	* NEWS:
+	Version 0.4
+
+2004-06-06  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.c:
+	Watch all screens instead of just the default.  Hopefully this is
+	the right thing to do, and people don't run a devilspie for each
+	screen.
+	
+2004-06-06  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-decorate.gob:
+	* src/flurb.c:
+	* src/Makefile.am
+	Set the OpenBox "decorate window" hint.  Patch from Vaclav Lorenc.
+
+2004-02-04  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-setwintype.gob:
+	* src/devilspie-action.gob:
+	* src/flurb.c:
+	* src/Makefile.am:
+	* README:
+	Added an action to set the type of a window. Thanks, Olivier
+	Andrie!
+	
+2003-09-17  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-debug.gob:
+	* src/devilspie-matcher-windowname.gob:
+	Don't crash on a NULL properties. Thanks to Rob Mayoff
+	<mayoff@dqd.com> for the patch.
+
+	* src/config-parser.c:
+	Don't crash on unknown properties, just tell the user. Far more
+	sane. Thanks to Rob again.
+	
+	* configure.in:
+	* NEWS:
+	Version 0.3.1.
+
+2003-08-14  Ross Burton  <ross@burtonini.com>
+
+	* README:
+	Update the documentation.
+
+	* NEWS:
+	* configure.in:
+	Version 0.3.
+
+	* debian/*
+	Using CDBS now.
+
+	* configure.in:
+	Check for wnck_window_set_fullscreen, as its only in libwnck
+	2.3.x.
+
+	* src/devilspie-action-resize.gob:
+	Wrap the fullscreen code in #if HAVE_FULLSCREEN. This hack will go
+	once libwnck 2.4 is released.
+
+2003-07-31  Ross Burton  <ross@burtonini.com>
+
+	* README:
+	Updated the readme, thanks to Gaetan de Menten.
+
+2003-06-25  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.1: Fix a typo spotted by Gaetan de Menten
+	<ged@bugfactory.org> .
+
+2003-05-07  Ross Burton  <ross@burtonini.com>
+
+	* Makefile.am (EXTRA_DIST): Include the generated spec file in the
+	build (noticed by Dag Wieers <dag@wieers.com>)
+
+2003-05-06  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-resize.gob: Add a "fullscreen" property,
+	requires a really really new wnck.
+
+2003-05-02  Frederic Crozat  <fcrozat@mandrakesoft.com>
+
+	* devilspie.spec.in: package locale files.
+
+2003-05-01  Ross Burton  <ross@burtonini.com>
+
+	* devilspie.spec.in: Added a RPM spec file, based on spec files by
+	Michael Raab <mraab@macbyte.info> and Lars R. Damerow
+	<lars@oddment.org>
+
+	* Makefile.am: Include the spec file in the dist.
+
+	* configure.in: Generate the spec file. Also comment out the GConf
+	code for now.
+
+	* debian/*: Updated
+
+2002-12-29  Christian Neumair  <chris@gnome-de.org>
+
+	* .cvsignore: Added stamp-h1.
+	* configure.in (ALL_LINGUAS): Added German (de).
+
+2002-12-17  Ross Burton  <ross@burtonini.com>
+
+	* configure.in: Find GConf.
+
+2002-12-02  Ross Burton  <ross@burtonini.com>
+
+	* configure.in: Added gettext support.
+
+	* src/devilspie.h: Added i18n macros.
+
+	* src/Makefile.am: Use DEVILSPIE_LOCALDIR instead of
+	GNOMELOCALDIR.
+
+	* config-parser.c, devilspie-action-debug.gob,
+	devilspie-action-hide.gob,devilspie-action-layer.gob,
+	devilspie-action-resize.gob, devilspie-action-savegeometry.gob,
+	devilspie-action-setworkspace.gob,
+	devilspie-matcher-windowname.gob, devilspie.c: Mark all sensible
+	strings for i18n.
+
+	* po/POTFILES.in: Updated.
+
+2002-11-22  Ross Burton  <ross@burtonini.com>
+
+	* configure.in: Cleaned up, and added the compiler checks.
+
+2002-11-15  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.c: Abort the Flurb if there are no matchers. Patch
+	from Patrick Aussems <zyk@bugfactory.org>.
+
+	* src/devilspie-matcher-windowname.gob: Fix a segfault when
+	passing in NULL pointers as strings. Patch from Patrick Aussems
+	<zyk@bugfactory.org>.
+
+	* .cvsignore, src/.cvsignore, po/.cvsignore: Added CVS ignore
+	files, from Patrick Aussems.
+	
+2002-11-14  Ross Burton  <ross@burtonini.com>
+
+	* configure.in: Add GNOME_COMPILE_WARNINGS, defaulting to "yes".
+
+	* src/Makefile.am: Remove the definition of CFLAGS as that was the
+	Wrong Thing To Do. The above change sets the warning flags now.
+
+2002-11-12  Ross Burton  <ross@burtonini.com>
+
+	* Makefile.am: Try and remove the intltool-* files which are
+	generated. For some reason this doesn't work...
+
+2002-11-10  Ross Burton  <ross@burtonini.com>
+
+	* configure.in: Bump version up to 0.2.4. Also check for the
+	regular expression POSIX headers, for...
+
+	* src/devilspie-matcher-windowname.gob: Use regular expression
+	matching instead of literal string compares. Thanks to Patrick
+	Aussems <zyk@bugfactory.org> for this kick-arse patch.
+
+2002-10-30  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-savegeometry.gob: Connect to the
+	window_closed signal of the WnckScreen in the constructor.
+
+	* README: Documentation is always a good thing. I was bored so I
+	fleshed this out a little.
+
+2002-10-24  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-debug.gob: Print out the window Role.
+
+	* src/devilspie-action-savegeometry.gob: Started on a Save Window
+	Geometry action. Doesn't do anything at the moment apart from
+	printing messages at the right moments.
+
+	* src/devilspie-matcher-windowname.gob: Re-wrote the return logic
+	to be much clearer, and started on a window role (WM_WINDOW_ROLE)
+	matcher, which also doesn't work.
+
+2002-10-17  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie-action-layer.gob: Added an Action which can set
+	the ABOVE and BELOW layer hints on windows. Panel-below heaven is
+	here! :)
+
+	* src/devilspie.c: Parse the command line arguments
+	correctly. Open the file specified, if no file is specified try to
+	open ~/.devilspie.xml.
+
+	* configure.in: Bump version to 0.2.2.
+
+2002-09-08  Ross Burton  <ross@burtonini.com>
+
+	* src/devilspie.c (main): Actually check the number of arguments,
+	so that we don't coredump if no configuration file is
+	specified. Fixes a segfault pointed out by jdub. As usual, IRC is
+	a great way of finding bugs in code.
+
+	* configure.in: Bump version to 0.2.1.
+
+2002-09-03  Ross Burton  <ross@burtonini.com>
+
+	* src/*: Many, many changes. In fact this entry is totally
+	redundant, except for...
+
+	* configure.in: Bump version up to 0.2.
+
+2002-08-14  Ross Burton  <ross@burtonini.com>
+
+	* src/*: Finally managed to make enough work for an alpha
+	release. Release 0.1!
+

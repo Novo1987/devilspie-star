@@ -1,0 +1,91 @@
+Devil's Pie
+===========
+
+Copyright (C) 2002-5, Ross Burton <ross@burtonini.com>
+
+
+A window-matching utility, inspired by Sawfish's "Matched Windows" option and
+the lack such functionality in Metacity. Metacity lacking window matching is not
+a bad thing -- Metacity is a lean window manager, and window manipulation does
+not have to be a window manager task.
+
+Devil's Pie can be configured to detect windows as they are created, and match
+the window to a set of rules. If the window matches the rules, it can perform a
+series of actions on that window. For example, I can make X-Chat appear on all
+workspaces, and make a particular xterm not appear in the pager or task list.
+
+
+Building
+--------
+
+To build devilspie, follow the usual configure ; make ; make install steps. If
+this confuses you, read INSTALL. Packages are in Debian Sarge, and I build
+Debian packages of the latest released version.  These are available from
+http://www.burtonini.com/debian/
+
+A .spec file is provided for RPM-based distributions, but I didn't write it and
+don't support it.  It may or may not work.
+
+
+Configuration
+-------------
+
+Devil's Pie 0.13 was a complete redesign and rewrite, so everything you knew
+about it is probably wrong.
+
+Devil's Pie is configured by reading a number of files from two directories:
+$HOME/.devilspie/ and $SYSCONFDIR/devilspie (typically /etc/devilspie).  Devil's
+Pie will read s-expressions from every .ds file in those paths.  S-expressions
+are familiar to most Emacs users and in the limited use they have in Devil's Pie
+are trivially learnt by example.
+
+The basic model is that every time a window is created, the s-expressions are
+evaluated.  The window is available to the functions you call as an implicit
+argument, so you can concentrate on defining the logic.
+
+If you want to see information about every window when it is created, in
+~/.devilspie/test.ds put:
+
+  (debug)
+
+When this is evaluated, the "debug" function is called and it outputs the window
+title, geometry, etc.
+
+Of course performing the same action to every window is no fun.  What if you
+want XMMS to start on the second workspace?
+
+  (if (is (application_name) "XMMS") (set_workspace 2))
+
+The "if" function evaluates the first argument as a true/false value, and if it
+is true then it evaluates the second argument, and if false it evaluates the
+third argument (which can be omitted).  The "is" function compares two strings
+for equality, returning true if they are identical.  The "application_name"
+function returns the name of the application which created the window, and
+"XMMS" is a literal string.  So if the application name is "XMMS", then the
+second argument will be evaluated.  This is a call to "set_workspace" with the
+integer argument 2, which moves the current window onto the second workspace.
+
+To perform multiple actions use (begin ...):
+
+  (if (matches (window_name) "^Character.+") (begin maximize (set_workspace 2)))
+
+Here "matches" interprets the second argument as a regular expression and
+evaluates that against the first argument.  "window_name" is the title of the
+current window, and "maximize" simply maximises the current window.  So this
+s-expression puts the window on workspace 2, maximised, if the window name
+begins with "Character" and has more characters in (note .+ rather than .*).
+
+I will write more documentation in the future but for now you'll have to look at
+the "symbols" array in src/parser.c to see what functions are available.
+
+
+Running
+-------
+
+Just run devilspie as a normal user. The best way is to run it in your session
+(for example in Desktop Preferences -> Advanced -> Sessions -> Startup
+Programs).
+
+If you are testing some s-expressions, you can specify them on the command line
+to load just those files instead of the files specified above.  To turn on some
+debugging information, pass --debug.
