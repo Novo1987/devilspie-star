@@ -1,0 +1,10 @@
+TODO for Devil's Pie
+
+S-Exp Port:
+* Documentation generator
+
+General Improvements:
+* Catch events on window move and resize too?
+* Add ability to insert self into session on startup
+* Use gnome-vfs to monitor the configuration file
+* UTF-8 safe string comparison functions

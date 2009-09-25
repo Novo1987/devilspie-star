@@ -1,0 +1,24 @@
+2007-02-23  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Added initial Swedish translation.
+
+2006-08-05  Karsten Bräckelmann  <guenther@rudersport.de>
+
+	* de.po: Fixed a small oops in German translation.
+
+2005-07-04  Hendrik Richter  <hendi@gnome-de.org>
+
+	* de.po: Fixed German translation by
+	Jens Seidel <jensseidel@users.sf.net>.
+
+2005-06-15  Frank Arnold  <farnold@cvs.gnome.org>
+
+	* de.po: Fixed typos noticed by Jens Seidel (Debian bug 313688) and
+	some additional ones. Updated translation. 
+
+2002-12-29  Christian Neumair  <chris@gnome-de.org>
+
+	* .cvsignore: Added missing files.
+	* ChangeLog: Added.
+	* POTFILES.in: Added missing files.
+	* de.po: Added German translation.

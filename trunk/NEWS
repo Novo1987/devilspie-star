@@ -1,0 +1,249 @@
+Devil's Pie "Sweet Music, Soul Music?" 0.22
+===========================================
+
+* Fix decorate/undecorate with OpenBox (thanks Rafał Mużyło)
+* Fix typos in man page (Loïc Minier)
+
+
+Devil's Pie "A Love Supreme" 0.21
+=================================
+
+* Add change_workspace action (#453464, thanks Adam Więckowski)
+* Add decorate action (#449634, thanks Galkin Vasily)
+* Add quit action (thanks Leon Zhang)
+* Handle wnck_screen_get_active_workspace() failing (#343546)
+
+
+Devil's Pie "Wearing That Dress" 0.20.2
+=======================================
+
+* Fix window_workspace (Andrew Yates)
+
+
+Devil's Pie "Wearing That Dress" 0.20.1
+=======================================
+
+* Fix parsing (Lars Damerow)
+* Fix test suite
+
+
+Devil's Pie "Wearing That Dress" 0.20
+=====================================
+
+* Handle multiple expressions in a file (Lars Damerow)
+* Add spawn_sync and spawn_async actions to start processes (David Decotigny)
+* Add println, str, hex, and expand print (DD)
+* Add window_xid matcher (DD)
+
+
+Devil's Pie "Sell Sell Sell" 0.19
+================================
+
+* Don't use wnck_window_set_geometry (#381233)
+
+
+Devil's Pie "Simmer To A Sizzle Like The Days Of Old" 0.18
+==========================================================
+
+* Add window_property matcher (Nigel Tao)
+* Add set_viewport action (James Willcox)
+* Add opacity action (Pavel Palat)
+* Add sticky action (Steve Leung)
+* Add unmaximise action (Alex Menk)
+* Add unminimise action (Richard Neill)
+* Fix negative offsets in geometry action (Vincent Ho, Midred)
+
+
+Devil's Pie "Out Of Gas, Still Burning" 0.17.1
+==============================================
+
+* Depend on GLib 2.9.1 onwards
+
+
+Devil's Pie "Stay With Me While We Grow Old" 0.17
+=================================================
+
+* Fix compile with GLib 2.10.
+
+
+Devil's Pie "Love To Hate" 0.16
+===============================
+
+* Fix undecorate action (Mikachu, RB)
+
+
+Devil's Pie "Shogun's Decapitator" 0.15
+=======================================
+
+* New matcher: window class (Jonas Linde)
+* New actions: focus (JL), center (JL), print (Ryan Koppenhaver), close (RK).
+* Fix test suite (RK)
+* Don't segfault on invalid s-exp (Christian Krause)
+* Never return NULL from a matcher
+* Wrap X call when removing decorations with error handling
+
+
+Devil's Pie "Lazy Release" 0.14
+===============================
+
+* Add Set Geometry (Guido Boehm)
+* Fix Set Window Type (Stefan van der Haven)
+* Make Pin work as expected (Jean-Yves Lefort)
+* Append new expressions, not prepend (Lars Damerow)
+* Fix typos in README (Larry Virden)
+
+
+Devil's Pie "Wind The Frog" 0.13
+================================
+
+* Total rewrite.
+* No, really.  A complete rewrite, no file left untouched.  Many thanks to Pixar
+  Animation Studios for sponsoring this work.
+* Use s-expressions instead of XML as the configuration file format, allowing
+  matches to be combined in new and exciting ways with (and) (or) and (not)
+  operators.
+* Read configuration from both the users home directory and /etc, allowing
+  centralised configuration.
+* Add the beginnings of a test suite.
+
+
+Devil's Pie "Trying To Make Their Paper" 0.12
+=============================================
+
+* Quit if no flurbs were loaded
+* Use GOption
+* Major code cleanup
+
+
+Devil's Pie "Used To Love You" 0.11
+===================================
+
+* Add an action to shade windows by Anonymous.  I didn't write it but I've lost
+  the mail the patch came in...
+* Fix the window type action
+* Fix the execute action
+* Check for xsltproc in configure, as it's required
+
+
+Devil's Pie "Can't Join Them? Beat Them" 0.10
+=============================================
+
+* Re-implement the required private wnck functions, now builds with G2.10
+  (Crispin Flowerday rocks)
+* Add min/max hints to the opacity action property
+* Display the min/max hints in the generated documentation.
+
+
+Devil's Pie "Missing Gifts" 0.9
+===============================
+
+* Check for libwnck 2.9.92 and pass timestamps if required
+* Handle properties containing doubles, so the opacity action works
+* Add CONSTRUCT flag to properties (Jean-Yves Lefort)
+* Start a private copy of various private wnck functions we need
+
+
+Devil's Pie "Mystery Boxes" 0.8
+===============================
+
+* Bring back --apply-to-existing, so you can work on existing windows
+* Add maximized_horizontally and _vertically to the resize action (John Russell)
+* Add an execute action (John Russell)
+* Add an opacity setting action (Guido Boehm)
+* Generate decent matcher/action documentation at build-time from the source
+* Check that regular expressions parsed correctly, fixing a common bug
+* Less compile warnings
+
+
+Devil's Pie "Stumpy" 0.7
+===============================
+
+* Set the Motif window hint when setting the decoration boolean (Vaclav Lorenc)
+
+
+Devil's Pie "Salmon Sunset" 0.6
+===============================
+
+* Fix the fullscreen action.  Sadly this bug has been in bugs.debian.net for 303
+  days.
+
+
+Devil's Pie "Right Where I Want You" 0.5
+========================================
+
+* Add an action to set the geometry of a window, by Henrik Brix Andersen.
+
+
+Devil's Pie "Nothing To See" 0.4.1
+==================================
+
+* Don't ship the debian/ folder.
+
+
+Devil's Pie "Derren Brown Is A Witch" 0.4
+=========================================
+
+* Add an action to set the window type atom (Olivier Andrieu)
+* Add an action to set the decorate window hint in OpenBox (Vaclav Lorenc)
+* Watch all screens for events, instead of just the default
+
+
+Devil's Pie "David Blaine has smelly socks" 0.3.1
+=================================================
+
+* Don't crash when a window role is null in various places (Rob Mayoff)
+* Don't crash on unknown properties (RM)
+* Being very slow at applying patches (me)
+
+
+Devil's Pie "Floating Skulls" 0.3
+=================================
+
+* Vastly improved documentation (Gaetan de Menten)
+* Add a "fullscreen" property (requires libwnck 2.3.something)
+* Added a RPM .spec file (me, Michael Raab, Lars R. Damerow)
+* Many bug fixes (Patrick Aussems)
+
+Translations:
+* de (Christian Neumair)
+
+
+Devil's Pie "Long Time Coming" 0.2.4
+====================================
+
+* Use regular expressions instead of literal string compares when
+  matching window names, application names, or roles (Patrick Aussems
+  <zyk@bugfactory.org>)
+* Bug fixes (Patrick Aussems again)
+* More documentation!
+* An RPM spec file (Michael Raab <mraab@macbyte.info> and Lars
+  R. Damerow <lars@oddment.org>)
+
+
+Devil's Pie 0.2.3
+=================
+
+* Re-generated the .c and .h files using GOB 2.0.3, fixing a terrible bug
+  with devilspie when using GCC 3.
+
+
+Devil's Pie 0.2.2
+=================
+
+* Have decent command line argument parsing
+* Added a layer action so that windows can be below or above the
+  normal windows
+
+
+Devil's Pie 0.2.1
+=================
+
+* Check the number of command line arguments, so we don't segfault any
+  more.
+
+
+Devil's Pie 0.2
+===============
+
+* The first real release -- 0.1 was actually released, but I didn't
+  really like it so I didn't tell many people...
