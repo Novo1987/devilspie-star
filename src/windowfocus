@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+""" Instant window focus script that runs on `devilspie-star'
+http://code.google.com/p/devilspie-star/
+devilspie documentation is at http://foosel.org/linux/devilspie
+
+Licence: GPL version 2
+Author: tkykhs@gmail.com
+
+FORMAT:
+$ windowfocus <appname>
+
+<appname> must be defined in `appname_condition_map' or else
+`fallback_condition' gets applied.
+
+EXAMPLE:
+$ windowfocus firefox
+$ windowfocus unmatched
+"""
+import os, sys, time
+
+TMP_DEVILSPIE_FILENAME = '/tmp/windowfocus.ds'
+LOG_FILENAME           = '/tmp/windowfocus.log'
+DEVILSPIE_TEMPLATE = '''\
+(if %s
+ (begin
+  (focus)))
+'''
+
+default_condition    = lambda e: '(is (window_class) "%s")' % e
+match_condition      = lambda e: '(matches (window_class) "%s")' % e
+fallback_condition   = lambda e: '(contains (window_class) "%s")' % e
+windowname_condition = lambda e: '(is (window_name) "%s")' % e
+and_conds            = lambda *conds: '(and %s)' % ' '.join(conds)
+or_conds             = lambda *conds: '(or %s)' % ' '.join(conds)
+nor_conds            = lambda conds: '(not %s)' % or_conds(*conds)
+
+appname_condition_map = {
+  'firefox'        : default_condition('Firefox'),
+  'emacs'          : and_conds(default_condition('Emacs'), windowname_condition('main')),
+  'thunderbird'    : default_condition('Thunderbird-bin') ,
+  'pidgin'         : default_condition('Pidgin') ,
+  'terminal'       : default_condition('Gnome-terminal') ,
+  'gnome-terminal' : default_condition('Gnome-terminal') ,
+  'tws'            : match_condition('^jclient'),
+  }
+## Special entry reserved for capturing unmatched, yet meaningful window
+appname_condition_map[ 'unmatched' ] = \
+    nor_conds( appname_condition_map.values() + \
+               [ #'(not (matches (window_property "_NET_WM_WINDOW_STATE") "_NET_WM_WINDOW_TYPE_NORMAL"))',
+                 default_condition('Gnome-panel'),
+                 default_condition(''),
+                 windowname_condition('Untitled window'),
+                 windowname_condition('child'),    ## avoid emacs child window (just for myself)
+                 ])
+
+def datentime():
+  return time.strftime("%Y-%m-%d %H:%M %S")
+
+def msg(s, fout):
+  line = s.strip() + '\n'
+  fout.write(line)
+
+
+if __name__  == '__main__':
+  exitcode = 0
+  
+  if len(sys.argv) != 2:
+    sys.stderr.write( 'Usage: %s <appname>\n' % sys.argv[0] )
+    sys.exit(1)
+  
+  focus_application  = sys.argv[1]
+  condition = appname_condition_map.get(focus_application, \
+                                        fallback_condition(focus_application))
+  
+  try:
+    log_fout = open(LOG_FILENAME, 'ab')
+    msg( '%s| init with %s' % (datentime(), sys.argv), log_fout)
+
+    ## Write file content
+    fout = open(TMP_DEVILSPIE_FILENAME, 'wb')
+    fout.write(DEVILSPIE_TEMPLATE % condition)
+    fout.close()
+    
+    command = "devilspie -q '%s'" % TMP_DEVILSPIE_FILENAME
+    errorcode = os.system(command)
+    
+    if errorcode:
+      msg( '%s| failed. errorcode=%d' % (datentime(), errorcode), log_fout )
+    else:
+      msg( '%s| succcess' % datentime(), log_fout )
+    
+  except Exception, e:
+    sys.stderr.write('Error: %s' % str(e))
+    exitcode = 1
+
+  finally:    ## for python 2.6 or above, use 'with' with fout's
+    log_fout.close()
+    fout.close()
+    sys.exit(exitcode)
