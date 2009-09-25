@@ -843,6 +843,6 @@ ESExpResult *func_spawn_async(ESExp *f, int argc, ESExpResult **argv, Context *c
  */
 ESExpResult *func_quit(ESExp *f, int argc, ESExpResult **argv, Context *c) {
   g_main_loop_quit (loop);
-  if (debug) g_printerr(_("Quiting...\n"));
+  if (debug) g_printerr(_("Quitting...\n"));
   return e_sexp_result_new_bool (f, TRUE);
 }

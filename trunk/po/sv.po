@@ -255,7 +255,7 @@ msgid "Error spawning child process (bg).\n"
 msgstr ""
 
 #: ../src/actions.c:777
-msgid "Quiting...\n"
+msgid "Quitting...\n"
 msgstr "Avslutar...\n"
 
 #: ../src/devilspie.c:102
@@ -280,7 +280,7 @@ msgid "Devil's Pie %s starting...\n"
 msgstr "Devil's Pie %s startar...\n"
 
 #: ../src/devilspie.c:140
-msgid "No s-expressions loaded, quiting\n"
+msgid "No s-expressions loaded, quitting\n"
 msgstr ""
 
 #: ../src/devilspie-action-exec.gob:31

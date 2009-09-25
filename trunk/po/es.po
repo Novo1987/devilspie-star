@@ -330,7 +330,7 @@ msgstr "Error al crear proceso hijo (bg).\n"
 
 #: ../src/actions.c:846
 #, c-format
-msgid "Quiting...\n"
+msgid "Quitting...\n"
 msgstr "Saliendo...\n"
 
 #: ../src/devilspie.c:102
@@ -358,7 +358,7 @@ msgstr "cargando Devil's Pie %s...\n"
 
 #: ../src/devilspie.c:140
 #, c-format
-msgid "No s-expressions loaded, quiting\n"
+msgid "No s-expressions loaded, quitting\n"
 msgstr "No existen expresiones «s» cargadas, saliendo\n"
 
 #: ../src/e-sexp.c:271

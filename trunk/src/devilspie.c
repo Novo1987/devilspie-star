@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
   if (debug) g_printerr("%d s-expressions loaded.\n", g_list_length(sexps));
 
   if (g_list_length (sexps) == 0) {
-    g_printerr(_("No s-expressions loaded, quiting\n"));
+    g_printerr(_("No s-expressions loaded, quitting\n"));
     return 1;
   }
 

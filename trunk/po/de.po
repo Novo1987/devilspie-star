@@ -153,7 +153,7 @@ msgid "Devil's Pie %s starting...\n"
 msgstr ""
 
 #: ../src/devilspie.c:124
-msgid "No s-expressions loaded, quiting\n"
+msgid "No s-expressions loaded, quitting\n"
 msgstr ""
 
 #: ../src/logical.c:82
