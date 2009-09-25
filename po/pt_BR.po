@@ -335,6 +335,10 @@ msgstr "Saindo...\n"
 msgid "Apply to all existing windows instead of just new windows."
 msgstr "Aplicar a todas as janelas existentes em vez de apenas novas janelas."
 
+#: ../src/devilspie.c
+msgid "Apply to all existing windows and immediately quit the program."
+msgstr ""
+
 #: ../src/devilspie.c:103
 msgid "Output debug information"
 msgstr "Saída de informações de depuração"

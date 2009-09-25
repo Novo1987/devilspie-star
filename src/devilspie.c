@@ -53,6 +53,11 @@ Context context = {NULL,};
 static gboolean apply_to_existing = FALSE;
 
 /**
+ * If we apply to existing windows and immediately quit the program.
+ */
+static gboolean apply_to_existing_and_quit = FALSE;
+
+/**
  * List of configuration files to open, or NULL if to open the default files.
  */
 static char **files = NULL;
@@ -89,8 +94,8 @@ static void init_screens(void) {
     WnckScreen *screen = wnck_screen_get (i);
     /* Connect a callback to the window opened event in libwnck */
     g_signal_connect (screen, "window_opened", (GCallback)window_opened_cb, NULL);
-    /* TODO: broken at the moment due to wnck change */
-    //if (apply_to_existing) wnck_screen_force_update (screen);
+    if (apply_to_existing)    // either 'a' or 'q' option is specified.
+      wnck_screen_force_update (screen);
   }
 }
 
@@ -100,6 +105,7 @@ static void init_screens(void) {
 int main(int argc, char **argv) {
   static const GOptionEntry options[] = {
     { "apply-to-existing", 'a', 0, G_OPTION_ARG_NONE, &apply_to_existing, N_("Apply to all existing windows instead of just new windows."), NULL },
+    { "quit", 'q', 0, G_OPTION_ARG_NONE, &apply_to_existing_and_quit, N_("Apply to all existing windows and immediately quit the program."), NULL },
     { "debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Output debug information"), NULL },
     { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &files, N_("Configuration files to use"), NULL },
     { NULL }
@@ -120,6 +126,9 @@ int main(int argc, char **argv) {
   context = g_option_context_new ("- Devil's Pie " VERSION);
   g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
   g_option_context_parse (context, &argc, &argv, &error);
+
+  if (apply_to_existing_and_quit)
+    apply_to_existing = TRUE;
 
   if (debug) g_printerr(_("Devil's Pie %s starting...\n"), VERSION);
 
@@ -144,9 +153,10 @@ int main(int argc, char **argv) {
   /* Connect to every screen */
   init_screens ();
 
-  /* Go go go! */
-  loop = g_main_loop_new (NULL, TRUE);
-  g_main_loop_run (loop);
-
+  if (!apply_to_existing_and_quit) {
+    /* Go go go! */
+    loop = g_main_loop_new (NULL, TRUE);
+    g_main_loop_run (loop);
+  }
   return 0;
 }

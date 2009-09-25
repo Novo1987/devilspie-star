@@ -262,6 +262,10 @@ msgstr "Avslutar...\n"
 msgid "Apply to all existing windows instead of just new windows."
 msgstr ""
 
+#: ../src/devilspie.c
+msgid "Apply to all existing windows and immediately quit the program."
+msgstr ""
+
 #: ../src/devilspie.c:103
 msgid "Output debug information"
 msgstr ""

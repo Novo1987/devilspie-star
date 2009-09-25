@@ -340,6 +340,10 @@ msgstr ""
 "nuevas.\n"
 
 #: ../src/devilspie.c:103
+msgid "Apply to all existing windows and immediately quit the program.\n"
+msgstr ""
+
+#: ../src/devilspie.c:103
 msgid "Output debug information\n"
 msgstr "Mostrar la información de depuración\n"
 
