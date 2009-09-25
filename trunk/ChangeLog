@@ -1,3 +1,7 @@
+2009-09-25  tkykhs  <tkykhs@gmail.com>
+
+	* src/devilspie.c: Add -q option.
+
 2009-02-13  Ross Burton  <ross@linux.intel.com>
 
 	* src/xutils.c:
