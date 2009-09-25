@@ -328,7 +328,7 @@ msgstr "Erro ao gerar processo (bg).\n"
 
 #: ../src/actions.c:846
 #, c-format
-msgid "Quiting...\n"
+msgid "Quitting...\n"
 msgstr "Saindo...\n"
 
 #: ../src/devilspie.c:102
@@ -354,7 +354,7 @@ msgstr "Inicializando Devil's Pie %s...\n"
 
 #: ../src/devilspie.c:140
 #, c-format
-msgid "No s-expressions loaded, quiting\n"
+msgid "No s-expressions loaded, quitting\n"
 msgstr "Sem expressões-s carregadas, saindo\n"
 
 #: ../src/e-sexp.c:271
