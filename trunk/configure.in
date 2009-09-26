@@ -34,7 +34,7 @@ AC_SUBST(WNCK_LIBS)
 PKG_CHECK_MODULES(WNCK_VER, libwnck-1.0 >= 2.9.92,
 		 wnck_new="yes", wnck_new="no")
 if test "x$wnck_new" = "xyes"; then
-        AC_DEFINE(NEED_TIMESTAMPS,1,[Define to 1 if timestamps are needed to wnck functions])
+        AC_DEFINE(NEED_TIMESTAMPS,0,[Define to 1 if timestamps are needed to wnck functions])
 fi
 
 # Check if we have the set_fullscreen function

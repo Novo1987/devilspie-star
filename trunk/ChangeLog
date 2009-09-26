@@ -1,5 +1,12 @@
 2009-09-25  tkykhs  <tkykhs@gmail.com>
 
+	* configure.in: set NEED_TIMESTAMPS to 0. This is to avoid
+				Wnck warnings such as "Wnck-WARNING **: Received a
+				timestamp of 0; window activation may not function properly."
+	* src/actions.c: specify the second parameter (without it would cause an error).
+
+2009-09-25  tkykhs  <tkykhs@gmail.com>
+
 	* src/devilspie.c: Add -q option.
 
 2009-02-13  Ross Burton  <ross@linux.intel.com>
