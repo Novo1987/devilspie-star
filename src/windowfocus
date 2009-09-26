@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """ Instant window focus script that runs on `devilspie-star'
 http://code.google.com/p/devilspie-star/
-devilspie documentation is at http://foosel.org/linux/devilspie
 
 Licence: GPL version 2
 Author: tkykhs@gmail.com
@@ -16,6 +15,11 @@ $ windowfocus <appname>
 EXAMPLE:
 $ windowfocus firefox
 $ windowfocus unmatched
+
+See Also:
+* Devilspie documentation  http://foosel.org/linux/devilspie
+* Extended Window Manager Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html
+  Application Window Properties Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html#id2551368
 """
 import os, sys, time
 
@@ -88,7 +92,7 @@ if __name__  == '__main__':
     if errorcode:
       msg( '%s| failed. errorcode=%d' % (datentime(), errorcode), log_fout )
     else:
-      msg( '%s| succcess' % datentime(), log_fout )
+      msg( '%s| success' % datentime(), log_fout )
     
   except Exception, e:
     sys.stderr.write('Error: %s' % str(e))
