@@ -294,7 +294,7 @@ ESExpResult *func_focus(ESExp *f, int argc, ESExpResult **argv, Context *c) {
 #if NEED_TIMESTAMPS
   wnck_window_activate (c->window, GDK_CURRENT_TIME);
 #else
-  wnck_window_activate (c->window);
+  wnck_window_activate (c->window, 1);
 #endif
   if (debug) g_printerr (_("Focusing\n"));
   return e_sexp_result_new_bool (f, TRUE);
@@ -352,7 +352,7 @@ ESExpResult *func_unminimize(ESExp *f, int argc, ESExpResult **argv, Context *c)
 #if NEED_TIMESTAMPS
   wnck_window_unminimize (c->window, GDK_CURRENT_TIME);
 #else
-  wnck_window_unminimize (c->window);
+  wnck_window_unminimize (c->window, 1);
 #endif
   if (debug) g_printerr(_("Un-minimising\n"));
   return e_sexp_result_new_bool (f, TRUE);
@@ -383,7 +383,7 @@ ESExpResult *func_close(ESExp *f, int argc, ESExpResult **argv, Context *c) {
 #if NEED_TIMESTAMPS
   wnck_window_close (c->window, GDK_CURRENT_TIME);
 #else
-  wnck_window_close (c->window);
+  wnck_window_close (c->window, 1);
 #endif
   if (debug) g_printerr(_("Closed\n"));
   return e_sexp_result_new_bool (f, TRUE);
