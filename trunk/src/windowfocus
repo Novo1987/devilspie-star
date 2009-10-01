@@ -3,6 +3,7 @@
 """ Instant window focus script that runs on `devilspie-star'
 http://code.google.com/p/devilspie-star/
 
+Environment: Python 2.5 or 2.6
 Licence: GPL version 2
 Author: tkykhs@gmail.com
 
@@ -21,11 +22,12 @@ See Also:
 * Extended Window Manager Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html
   Application Window Properties Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html#id2551368
 """
+from __future__ import with_statement
 import os, sys, time
 
 TMP_DEVILSPIE_FILENAME = '/tmp/windowfocus.ds'
-LOG_FILENAME           = '/tmp/windowfocus.log'
-DEVILSPIE_TEMPLATE = '''\
+LOG_FILENAME           = None # '/tmp/windowfocus.log'
+DEVILSPIE_TEMPLATE     = '''\
 (if %s
  (begin
   (focus)))
@@ -58,16 +60,10 @@ appname_condition_map[ 'unmatched' ] = \
                  windowname_condition('child'),    ## avoid emacs child window (just for myself)
                  ])
 
-def datentime():
-  return time.strftime("%Y-%m-%d %H:%M %S")
-
-def msg(s, fout):
-  line = s.strip() + '\n'
-  fout.write(line)
-
-
 if __name__  == '__main__':
-  exitcode = 0
+  datentime = lambda: time.strftime("%Y-%m-%d %H:%M %S")
+  msg       = lambda s, fout: fout.write(s.strip()+'\n')
+  exitcode  = 0
   
   if len(sys.argv) != 2:
     sys.stderr.write( 'Usage: %s <appname>\n' % sys.argv[0] )
@@ -77,28 +73,24 @@ if __name__  == '__main__':
   condition = appname_condition_map.get(focus_application, \
                                         fallback_condition(focus_application))
   
-  try:
-    log_fout = open(LOG_FILENAME, 'ab')
+  with (open(LOG_FILENAME, 'ab') if LOG_FILENAME else sys.stderr) as log_fout:
     msg( '%s| init with %s' % (datentime(), sys.argv), log_fout)
-
-    ## Write file content
-    fout = open(TMP_DEVILSPIE_FILENAME, 'wb')
-    fout.write(DEVILSPIE_TEMPLATE % condition)
-    fout.close()
     
+    ## Write file content
+    with open(TMP_DEVILSPIE_FILENAME, 'wb') as fout:
+      fout.write(DEVILSPIE_TEMPLATE % condition)
+      
     command = "devilspie -q '%s'" % TMP_DEVILSPIE_FILENAME
-    errorcode = os.system(command)
+    try:
+      errorcode = os.system(command)
+    except Exception, e:
+      sys.stderr.write('Error: %s' % str(e))
+      exitcode = 1
     
     if errorcode:
       msg( '%s| failed. errorcode=%d' % (datentime(), errorcode), log_fout )
+      exitcode = 2
     else:
       msg( '%s| success' % datentime(), log_fout )
-    
-  except Exception, e:
-    sys.stderr.write('Error: %s' % str(e))
-    exitcode = 1
 
-  finally:    ## for python 2.6 or above, use 'with' with fout's
-    log_fout.close()
-    fout.close()
-    sys.exit(exitcode)
+  sys.exit(exitcode)
