@@ -1,96 +1,100 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Instant window focus script that runs on `devilspie-star'
-http://code.google.com/p/devilspie-star/
+
+"""Instant window focus script.
 
 Environment: Python 2.5 or 2.6
 Licence: GPL version 2
 Author: tkykhs@gmail.com
 
 FORMAT:
-$ windowfocus <appname>
+$ windowfocus <query>
 
-<appname> must be defined in `appname_condition_map' or else
-`fallback_condition' gets applied.
+INTERPRETATION.
 
-EXAMPLE:
+1. If <query> matches any of QUERY_TRANSLATION's key, its value becomes the
+condition to be matched against each window.
+
+2. If <query> is 'unmatched', then the program tries to capture the window that
+doesn't match any of the conditions in QUERY_TRANSLATION.
+
+3. If <query> matches none of QUERY_TRANSLATION's key or 'unmatched', then
+DEFAULT_CONDITION gets used as the condition.
+
+EXAMPLES:
 $ windowfocus firefox
 $ windowfocus unmatched
-
-See Also:
-* Devilspie documentation  http://foosel.org/linux/devilspie
-* Extended Window Manager Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html
-  Application Window Properties Hints  http://standards.freedesktop.org/wm-spec/wm-spec-latest.html#id2551368
 """
-from __future__ import with_statement
-import os, sys, time
+import sys
+import gtk, wnck
+from itertools import ifilter
 
-TMP_DEVILSPIE_FILENAME = '/tmp/windowfocus.ds'
-LOG_FILENAME           = None # '/tmp/windowfocus.log'
-DEVILSPIE_TEMPLATE     = '''\
-(if %s
- (begin
-  (focus)))
-'''
-
-default_condition    = lambda e: '(is (window_class) "%s")' % e
-match_condition      = lambda e: '(matches (window_class) "%s")' % e
-fallback_condition   = lambda e: '(contains (window_class) "%s")' % e
-windowname_condition = lambda e: '(is (window_name) "%s")' % e
-and_conds            = lambda *conds: '(and %s)' % ' '.join(conds)
-or_conds             = lambda *conds: '(or %s)' % ' '.join(conds)
-nor_conds            = lambda conds: '(not %s)' % or_conds(*conds)
-
-appname_condition_map = {
-  'firefox'        : default_condition('Firefox'),
-  'emacs'          : and_conds(default_condition('Emacs'), windowname_condition('main')),
-  'thunderbird'    : default_condition('Thunderbird-bin') ,
-  'pidgin'         : default_condition('Pidgin') ,
-  'terminal'       : default_condition('Gnome-terminal') ,
-  'gnome-terminal' : default_condition('Gnome-terminal') ,
-  'tws'            : match_condition('^jclient'),
+QUERY_TRANSLATION = {
+  'firefox'        : lambda e: e.appname == 'Firefox',
+  'emacs'          : lambda e: e.appname == 'emacs' and e.title != 'child',
+  'thunderbird'    : lambda e: e.appname == 'Thunderbird',
+  'pidgin'         : lambda e: e.appname == 'Pidgin',
+  'xournal'        : lambda e: e.appname == 'Xournal',
+  'terminal'       : lambda e: e.appname == 'Terminal',
+  # 'tws'            : match_condition('^jclient'),
+  'anzan'          : lambda e: e.appname == 'emacs' and e.title == 'anzan',
   }
-## Special entry reserved for capturing unmatched, yet meaningful window
-appname_condition_map[ 'unmatched' ] = \
-    nor_conds( appname_condition_map.values() + \
-               [ #'(not (matches (window_property "_NET_WM_WINDOW_STATE") "_NET_WM_WINDOW_TYPE_NORMAL"))',
-                 default_condition('Gnome-panel'),
-                 default_condition(''),
-                 windowname_condition('Untitled window'),
-                 windowname_condition('child'),    ## avoid emacs child window (just for myself)
-                 ])
+DEFAULT_CONDITION = lambda e: e.query.lower() in e.appname.lower()
+
+def exists(predicate, seq):
+  for x in ifilter(predicate, seq):
+    return x
+  return False
+UNMATCHED_CONDITION = lambda e: \
+    not exists(lambda f: f(e), QUERY_TRANSLATION.values()) and \
+    e.title not in ('Untitled window', 'child', 'Top Expanded Edge Panel', 'x-nautilus-desktop')
+
+
+class Struct:
+  def __init__(self, **entries):
+    self.__dict__.update(entries)
+  def isdefined(self, var_name):
+    self.__dict__.__contains__(var_name)
+  def __cmp__(self, other):
+    if isinstance(other, Struct):
+      return cmp(self.__dict__, other.__dict__)
+    else:
+      return cmp(self.__dict__, other)
+  def __getitem__(self, key):
+    return self.__dict__[key]
+  def __setitem__(self, key, val):
+    self.__dict__[key] = val
+
+
+def get_windowlist():
+  screen = wnck.screen_get_default()
+  while gtk.events_pending():
+    gtk.main_iteration()
+  return screen.get_windows()
+
+def get_condition(query):
+  if query == 'unmatched':
+    return UNMATCHED_CONDITION
+  if query in QUERY_TRANSLATION:
+    return QUERY_TRANSLATION[query]
+  return DEFAULT_CONDITION
+
 
 if __name__  == '__main__':
-  datentime = lambda: time.strftime("%Y-%m-%d %H:%M %S")
-  msg       = lambda s, fout: fout.write(s.strip()+'\n')
-  exitcode  = 0
   
   if len(sys.argv) != 2:
-    sys.stderr.write( 'Usage: %s <appname>\n' % sys.argv[0] )
+    sys.stderr.write( 'Usage: %s <query>\n' % sys.argv[0] )
     sys.exit(1)
   
-  focus_application  = sys.argv[1]
-  condition = appname_condition_map.get(focus_application, \
-                                        fallback_condition(focus_application))
-  
-  with (open(LOG_FILENAME, 'ab') if LOG_FILENAME else sys.stderr) as log_fout:
-    msg( '%s| init with %s' % (datentime(), sys.argv), log_fout)
-    
-    ## Write file content
-    with open(TMP_DEVILSPIE_FILENAME, 'wb') as fout:
-      fout.write(DEVILSPIE_TEMPLATE % condition)
-      
-    command = "devilspie -q '%s'" % TMP_DEVILSPIE_FILENAME
-    try:
-      errorcode = os.system(command)
-    except Exception, e:
-      sys.stderr.write('Error: %s' % str(e))
-      exitcode = 1
-    
-    if errorcode:
-      msg( '%s| failed. errorcode=%d' % (datentime(), errorcode), log_fout )
-      exitcode = 2
-    else:
-      msg( '%s| success' % datentime(), log_fout )
+  query = sys.argv[1]
 
-  sys.exit(exitcode)
+  window_list = get_windowlist()
+  condition = get_condition(query)
+  for window in window_list:
+    e = Struct(title=window.get_name(),
+               appname=window.get_application().get_name(),
+               query=query)
+    # print e.title, e.appname
+    if condition(e):
+      window.activate(gtk.get_current_event_time())    ## focus
+      break
