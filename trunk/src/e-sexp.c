@@ -640,6 +640,7 @@ term_eval_if(ESExp *f, int argc, ESExpTerm **argv, void *data)
 		doit = (r->type == ESEXP_RES_BOOL && r->value.bool);
 		e_sexp_result_free(f, r);
 		if (doit) {
+          if_satisified = TRUE;
 			return e_sexp_term_eval(f, argv[1]);
 		} else if (argc>2) {
 			return e_sexp_term_eval(f, argv[2]);

@@ -45,6 +45,11 @@ gboolean debug = FALSE;
  */
 Context context = {NULL,};
 
+/**
+ * If "if" expression is ever satisfied for one window.
+ */
+gboolean if_satisified = FALSE;
+
 /* Private state */
 
 /**
@@ -56,6 +61,11 @@ static gboolean apply_to_existing = FALSE;
  * If we apply to existing windows and immediately quit the program.
  */
 static gboolean apply_to_existing_and_quit = FALSE;
+
+/**
+ * Apply and quit the program after the first if-matching window is encountered
+ */
+static gboolean apply_to_first_match_and_quit = FALSE;
 
 /**
  * List of configuration files to open, or NULL if to open the default files.
@@ -71,9 +81,14 @@ GMainLoop *loop = NULL;
  * Evaluate a s-expression.
  */
 static void run_sexp(ESExp * sexp, WnckWindow *window) {
-  context.window = window;
-  /* We really don't care what the top-level s-expressions evaluate to */
-  e_sexp_result_free (sexp, e_sexp_eval(sexp));
+  if (!(if_satisified && apply_to_first_match_and_quit)) {
+    context.window = window;
+    /* We really don't care what the top-level s-expressions evaluate to */
+    e_sexp_result_free (sexp, e_sexp_eval(sexp));
+  }
+  // else {
+  //   g_printerr("if_satisified already. skipping...\n");
+  // }
 }
 
 /**
@@ -106,6 +121,7 @@ int main(int argc, char **argv) {
   static const GOptionEntry options[] = {
     { "apply-to-existing", 'a', 0, G_OPTION_ARG_NONE, &apply_to_existing, N_("Apply to all existing windows instead of just new windows."), NULL },
     { "quit", 'q', 0, G_OPTION_ARG_NONE, &apply_to_existing_and_quit, N_("Apply to all existing windows and immediately quit the program."), NULL },
+    { "quit1", 'Q', 0, G_OPTION_ARG_NONE, &apply_to_first_match_and_quit, N_("Apply and quit the program after the first if-matching window is encountered."), NULL },
     { "debug", 'd', 0, G_OPTION_ARG_NONE, &debug, N_("Output debug information"), NULL },
     { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &files, N_("Configuration files to use"), NULL },
     { NULL }
@@ -127,7 +143,7 @@ int main(int argc, char **argv) {
   g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
   g_option_context_parse (context, &argc, &argv, &error);
 
-  if (apply_to_existing_and_quit)
+  if (apply_to_existing_and_quit || apply_to_first_match_and_quit)
     apply_to_existing = TRUE;
 
   if (debug) g_printerr(_("Devil's Pie %s starting...\n"), VERSION);
@@ -153,7 +169,7 @@ int main(int argc, char **argv) {
   /* Connect to every screen */
   init_screens ();
 
-  if (!apply_to_existing_and_quit) {
+  if (!apply_to_existing_and_quit && !apply_to_first_match_and_quit) {
     /* Go go go! */
     loop = g_main_loop_new (NULL, TRUE);
     g_main_loop_run (loop);

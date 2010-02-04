@@ -47,7 +47,8 @@ def exists(predicate, seq):
   return False
 UNMATCHED_CONDITION = lambda e: \
     not exists(lambda f: f(e), QUERY_TRANSLATION.values()) and \
-    e.title not in ('Untitled window', 'child', 'Top Expanded Edge Panel', 'x-nautilus-desktop')
+    not e.appname.endswith('Edge Panel') and \
+    e.title not in ('Untitled window', 'x-nautilus-desktop', 'child')
 
 
 class Struct:

@@ -144,3 +144,8 @@ ESExpResult    *e_sexp_result_new_bool (ESExp *f, gboolean b);
 G_END_DECLS
 
 #endif /* _E_SEXP_H */
+
+/**
+ * If "if" expression is ever satisfied for one window.
+ */
+extern gboolean if_satisified;
