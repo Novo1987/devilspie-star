@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """Instant window focus script.
 
 Environment: Python 2.5 or 2.6
 Licence: GPL version 2
 Author: tkykhs@gmail.com
+Copyright: 2009, 2010 tkykhs <tkykhs@gmail.com>
 
 FORMAT:
 $ windowfocus <query>
@@ -22,24 +22,21 @@ doesn't match any of the conditions in QUERY_TRANSLATION.
 DEFAULT_CONDITION gets used as the condition.
 
 EXAMPLES:
-$ windowfocus firefox
-$ windowfocus unmatched
+$ windowfocus.py firefox
+$ windowfocus.py unmatched
 """
-import sys
 import gtk, wnck
 from itertools import ifilter
 
-QUERY_TRANSLATION = {
-  'firefox'        : lambda e: e.appname == 'Firefox',
-  'emacs'          : lambda e: e.appname == 'emacs' and e.title != 'child',
-  'thunderbird'    : lambda e: e.appname == 'Thunderbird',
-  'pidgin'         : lambda e: e.appname == 'Pidgin',
-  'xournal'        : lambda e: e.appname == 'Xournal',
-  'terminal'       : lambda e: e.appname == 'Terminal',
-  # 'tws'            : match_condition('^jclient'),
-  'anzan'          : lambda e: e.appname == 'emacs' and e.title == 'anzan',
+_DEBUG = False
+
+DEFAULT_CONDITION = lambda e: e.windowtype=='normal' and e.query.lower() in e.classname.lower()
+QUERY_TRANSLATION = {  ## Non-default condition for specific queries
+  'firefox'     : lambda e: e.windowtype=='normal' and e.classname=='Firefox' and e.title.endswith('Mozilla Firefox'),
+  'emacs'       : lambda e: e.windowtype=='normal' and e.classname=='Emacs' and e.title not in ('child', 'anzan'),
+  'anzan'       : lambda e: e.windowtype=='normal' and e.classname=='Emacs' and e.title=='anzan',
+  'terminal'    : lambda e: e.windowtype=='normal' and e.classname=='Gnome-terminal',
   }
-DEFAULT_CONDITION = lambda e: e.query.lower() in e.appname.lower()
 
 def exists(predicate, seq):
   for x in ifilter(predicate, seq):
@@ -48,24 +45,15 @@ def exists(predicate, seq):
 UNMATCHED_CONDITION = lambda e: \
     not exists(lambda f: f(e), QUERY_TRANSLATION.values()) and \
     not e.appname.endswith('Edge Panel') and \
-    e.title not in ('Untitled window', 'x-nautilus-desktop', 'child')
+    e.title not in ('Untitled window', 'x-nautilus-desktop', 'child', 'anzan')
 
 
-class Struct:
+class WindowInfo:
   def __init__(self, **entries):
     self.__dict__.update(entries)
-  def isdefined(self, var_name):
-    self.__dict__.__contains__(var_name)
-  def __cmp__(self, other):
-    if isinstance(other, Struct):
-      return cmp(self.__dict__, other.__dict__)
-    else:
-      return cmp(self.__dict__, other)
-  def __getitem__(self, key):
-    return self.__dict__[key]
-  def __setitem__(self, key, val):
-    self.__dict__[key] = val
-
+  def __str__(self):
+    args = ['%s=%s' % (k, repr(v)) for (k, v) in vars(self).items()]
+    return 'WindowInfo(%s)' % ', '.join(args)
 
 def get_windowlist():
   screen = wnck.screen_get_default()
@@ -81,21 +69,32 @@ def get_condition(query):
   return DEFAULT_CONDITION
 
 
+def windowfocus(query):
+  window_list = get_windowlist()
+  condition = get_condition(query)
+  retval = False
+  for window in window_list:
+    e = WindowInfo(title=window.get_name(),
+               classname=window.get_class_group().get_res_class(),
+               appname=window.get_application().get_name(),
+               windowtype=window.get_window_type().value_nick,
+               query=query)
+    if _DEBUG: print e
+    if condition(e):
+      window.activate(gtk.get_current_event_time())    ## focus
+      retval = True
+      break
+  return retval
+
 if __name__  == '__main__':
+  import sys
   
   if len(sys.argv) != 2:
-    sys.stderr.write( 'Usage: %s <query>\n' % sys.argv[0] )
+    sys.stderr.write('Usage: %s <query>\n' % sys.argv[0])
     sys.exit(1)
   
   query = sys.argv[1]
+  windowfocus(query)
 
-  window_list = get_windowlist()
-  condition = get_condition(query)
-  for window in window_list:
-    e = Struct(title=window.get_name(),
-               appname=window.get_application().get_name(),
-               query=query)
-    # print e.title, e.appname
-    if condition(e):
-      window.activate(gtk.get_current_event_time())    ## focus
-      break
+
+
